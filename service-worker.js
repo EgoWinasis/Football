@@ -11,6 +11,7 @@ const urlsToCache = [
   "/css/materialize.min.css",
   "https://fonts.googleapis.com/icon?family=Material+Icons",
   "https://fonts.gstatic.com/s/materialicons/v55/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2",
+  "https://code.jquery.com/jquery-3.5.1.min.js",
   "https://cdn.jsdelivr.net/npm/sweetalert2@10",
   "/js/materialize.min.js",
   "/js/nav.js",
