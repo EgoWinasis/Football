@@ -27,15 +27,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function loadPage(page) {
    
-    if (page == 'home') {
-      getAllMatch();
-    }
-    if (page == 'teams') {
-      getAllTeams();
-    }
-    if (page == 'favorites') {
-    showData();
-    }
 
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
@@ -43,6 +34,17 @@ document.addEventListener("DOMContentLoaded", function () {
         let content = document.querySelector("#body-content");
         if (this.status === 200) {
           content.innerHTML = xhttp.responseText;
+
+          if (page == 'home') {
+            getAllMatch();
+          }
+          if (page == 'teams') {
+            getAllTeams();
+          }
+          if (page == 'favorites') {
+          showData();
+          }
+          
         } else if (this.status == 404) {
           content.innerHTML = "<p>Halaman tidak ditemukan.</p>";
         } else {
