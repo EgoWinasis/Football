@@ -5,10 +5,10 @@ const BASE_URL = "https://api.football-data.org/v2/";
 
 const fetchDataFromApi = url => {
     return fetch(url, {
-        headers: {
-            'X-Auth-Token': API_KEY
-        }
-    })
+            headers: {
+                'X-Auth-Token': API_KEY
+            }
+        })
         .then(res => {
             if (res.status !== 200) {
                 console.log("Error: " + res.status);
@@ -33,6 +33,7 @@ const getAllMatch = () => {
             if (response) {
                 response.json().then(data => {
                     // console.log("Matches Data: " + data);
+                     $(".preloader").fadeOut();
                     showMatches(data);
                 })
             }
@@ -43,6 +44,7 @@ const getAllMatch = () => {
 
     fetchDataFromApi(`${BASE_URL}competitions/CL/matches`)
         .then(data => {
+             $(".preloader").fadeOut();
             showMatches(data);
         })
         .catch(error => {
@@ -68,12 +70,12 @@ const showMatches = dataMatches => {
 
         $('#jadwal').append(`
                     <tr>
-                        <td>`+ dateTime.slice(0,10) +`</td>
-                        <td>`+ dateTime.slice(11,16) +`</td>
-                        <td>`+ status + `</td>
-                        <td>`+ (group || '-') + `</td>
-                        <td>`+ homeTeamName + `<span style="color:red;">   VS   </span>`  + awayTeamName + `</td>
-                        <td>`+ (homeTeamScore || 0) + ` - ` + (awayTeamScore || 0) + `</td>
+                        <td>` + dateTime.slice(0, 10) + `</td>
+                        <td>` + dateTime.slice(11, 16) + `</td>
+                        <td>` + status + `</td>
+                        <td>` + (group || '-') + `</td>
+                        <td>` + homeTeamName + `<span style="color:red;">   VS   </span>` + awayTeamName + `</td>
+                        <td>` + (homeTeamScore || 0) + ` - ` + (awayTeamScore || 0) + `</td>
                     </tr>
 
                     `)
@@ -93,6 +95,7 @@ const getAllTeams = () => {
             if (response) {
                 response.json().then(data => {
                     // console.log("Matches Data: " + data);
+                     $(".preloader").fadeOut();
                     showTeams(data);
                 })
             }
@@ -103,6 +106,7 @@ const getAllTeams = () => {
 
     fetchDataFromApi(`${BASE_URL}competitions/2001/teams`)
         .then(data => {
+             $(".preloader").fadeOut();
             showTeams(data);
         })
         .catch(error => {
@@ -116,21 +120,27 @@ const showTeams = dataTeams => {
     document.querySelector('body')
     // console.log(teams);
     $.each(teams, function (i, data) {
-        let id  =   data.id;
+        let id = data.id;
         let name = data.name;
         let founded = data.founded;
         let address = data.address;
         let website = data.website;
-        let logoUrl = data.crestUrl.replace(/^http:\/\//i, 'https://');
-        // console.log(id);
+        let crestUrl = data.crestUrl;
+
+        if (crestUrl === null) {
+            crestUrl = '/images/pwa-192x192.png';
+        }
+
+
+        // console.log(data);
         $('#teams').append(`
                     <tr>
-                        <td><a href='#teams'  onclick="addFavorite('${id}')">Add Favorite</a></td>
-                        <td>`+ name + `</td>
-                        <td>`+ (founded || ' ') + `</td>
-                        <td>`+ (address || ' ') + `</td>
-                        <td><a href=`+ (website || ' ') + `>` + (website || ' ' ) + `</a></td>
-                        <td><img width="100px" src=`+ (logoUrl || 'soccer_ball_192.png') + `></td>
+                        <td><a href='#teams'  onclick="getFavTeams('${id}@${name}@${founded}@${address}@${website}@${crestUrl}')">Add Favorite</a></td>
+                        <td>` + name + `</td>
+                        <td>` + (founded || ' ') + `</td>
+                        <td>` + (address || ' ') + `</td>
+                        <td><a href=` + (website || ' ') + `>` + (website || ' ') + `</a></td>
+                        <td><img width="100px" alt="Logo Team" src=` + crestUrl + `></td>
                     </tr>
 
                     `)
@@ -138,5 +148,3 @@ const showTeams = dataTeams => {
     });
 
 }
-
-

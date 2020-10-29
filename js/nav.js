@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
   loadPage(page);
 
   function loadPage(page) {
-   
+
 
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
@@ -42,9 +42,9 @@ document.addEventListener("DOMContentLoaded", function () {
             getAllTeams();
           }
           if (page == 'favorites') {
-          showData();
+            showData();
           }
-          
+
         } else if (this.status == 404) {
           content.innerHTML = "<p>Halaman tidak ditemukan.</p>";
         } else {
@@ -88,5 +88,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 });
-
-

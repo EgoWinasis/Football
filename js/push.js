@@ -1,7 +1,7 @@
 const webPush = require('web-push');
 const vapidKeys = {
-    "publicKey": "BN1aSiffLrtvVVvEEHXVHXrPq9klQSUfLgJxRCBtftzLByv60VfBhzMNxneMeW7hI-rPKsjvYmeS33bv5SBAhd0",
-    "privateKey": "XRsNc_0_CHAFzWyqsLHUV-snN1PilAh3iG8_Sbnt73M"
+    "publicKey": "BIcIKxueU743B0yWOIZ5f4HewojzDI9OPkpTS55H0IPgsA5P67OnFdTJ0IZccNqRwz973zsA10XKD66G-jB7sew",
+    "privateKey": "4kKa5kt3qK11eopE3yhkdxeeqdeM3kQoCNY79y_-y1c"
 };
  
  
@@ -11,10 +11,10 @@ webPush.setVapidDetails(
     vapidKeys.privateKey
 )
 const pushSubscription = {
-    "endpoint": " https://fcm.googleapis.com/fcm/send/dx3uDmDPhYY:APA91bF9Q_EYaYPJafZM4WHCe8YDNpJM6v5ohm9b5bXSXN1sQsmcATm_2XP5DXRhNAA2mcqnbGNKPTvTE8GClDaJm_3uZL-xPMzvlzHIV6qPdezHARhSaglnOplLpV8Pb1t_iBgebCoO",
+    "endpoint": "https://fcm.googleapis.com/fcm/send/ejlP7Zq8Kc0:APA91bEanaLH9cR2j0zxcvTPXy6a1vfRP_qCA8lpM2xZwGFi47wpeoDLiELhBz_zEQmVky4e4yHE_Zb6Za43-GkPHGw4NK3XE-UR18Nc1ySCcJ0LuP0sBWgqDlOGHJqFr-299b5ZrCTO",
     "keys": {
-        "p256dh": "BMfzyql+fhPom1Nzu9nKVnTvlxFsnAJD89qZ5EDr855lDdiY1eWHRHBQlc9w2EvL4fDetcHe5CfzUUeMHNzmu4c=",
-        "auth": "HfAdcFbiTVh/S0T4XjtSrw=="
+        "p256dh": "BIiQiuiFEUbVZsZvMG5Byvf/O3VUXYwdBoevVNTfQkcESiP+RGSJ9CO/pxqlUwejFeGiKloeQtC/1u0zQpzuH9A=",
+        "auth": "2MZ6RkzZ52s6+4L2rCZKIg=="
     }
 };
 const payload = 'check the schedule of matches that will take place today!';
@@ -27,3 +27,5 @@ webPush.sendNotification(
     payload,
     options
 );
+
+

@@ -1,73 +1,66 @@
-const CACHE_NAME = "football-v1";
-const urlsToCache = [
-  "/",
-  "/nav.html",
-  "/index.html",
-  "/pages/home.html",
-  "/pages/favorites.html",
-  "/pages/teams.html",
-  "/pages/about.html",
-  "/pages/contact.html",
-  "/css/materialize.min.css",
-  "https://fonts.googleapis.com/icon?family=Material+Icons",
-  "https://fonts.gstatic.com/s/materialicons/v55/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2",
-  "https://code.jquery.com/jquery-3.5.1.min.js",
-  "https://cdn.jsdelivr.net/npm/sweetalert2@10",
-  "/js/materialize.min.js",
-  "/js/nav.js",
-  "/js/script.js",
-  "/js/api.js",
-  "/js/db.js",
-  "/js/idb.js",
-  "/manifest.json",
-  "/soccer_ball_512.png",
-  "/soccer_ball_192.png",
-  "/images/background.png"
-];
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js');
  
-self.addEventListener("install", event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(function(cache) {
-      return cache.addAll(urlsToCache);
+if (workbox)
+  console.log(`Workbox berhasil dimuat`);
+else
+  console.log(`Workbox gagal dimuat`);
+
+
+
+
+
+
+workbox.precaching.precacheAndRoute([
+    { url: '/index.html', revision: '1' },
+    { url: '/nav.html', revision: '1' },
+    { url: '/pages/about.html', revision: '1' },
+    { url: '/pages/contact.html', revision: '1' },
+    { url: '/pages/home.html', revision: '1' },
+    { url: '/pages/teams.html', revision: '1' },
+    { url: '/pages/favorites.html', revision: '1' },
+    { url: '/css/materialize.min.css', revision: '1' },
+    { url: '/css/style.css', revision: '1' },
+    { url: '/js/materialize.min.js', revision: '1' },
+    { url: '/js/script.js', revision: '1' },
+    { url: '/js/api.js', revision: '1' },
+    { url: '/js/db.js', revision: '1' },
+    { url: '/js/idb.js', revision: '1' },
+    { url: '/js/nav.js', revision: '1' },
+    { url: 'https://cdn.jsdelivr.net/npm/sweetalert2@10', revision: '1' },
+    { url: 'https://code.jquery.com/jquery-3.5.1.min.js', revision: '1' },
+    { url: 'https://fonts.googleapis.com/icon?family=Material+Icons', revision: '1' },
+    { url: '/images/background.png', revision: '1' },
+    { url: '/images/apple-touch-icon-180x180.png', revision: '1' },
+    { url: '/images/pwa-192x192.png', revision: '1' },
+    { url: '/images/pwa-512x512.png', revision: '1' },
+    { url: '/images/tile70x70.png', revision: '1' },
+    { url: '/images/tile150x150.png', revision: '1' },
+    { url: '/images/tile310x310.png', revision: '1' },
+    { url: '/images/preloader.gif', revision: '1' },
+    { url: '/manifest.json', revision: '1' },
+]);
+
+
+workbox.routing.registerRoute(
+  new RegExp('/pages/'),
+    workbox.strategies.staleWhileRevalidate({
+        cacheName: 'pages'
     })
-  );
-});
+);
 
-self.addEventListener("activate", event => {
-    event.waitUntil(
-        caches.keys().then(function(cacheNames) {
-            return Promise.all(
-                cacheNames.map(function(cacheName) {
-                    if (cacheName !== CACHE_NAME) {
-                        console.log("ServiceWorker: cache " + cacheName + " dihapus");
-                        return caches.delete(cacheName);
-                    }
-                })
-            );
-        })
-    );
-});
+workbox.routing.registerRoute(
+  new RegExp('https://api.football-data.org/v2/competitions/2001/teams'),
+    workbox.strategies.staleWhileRevalidate({
+      cacheName: 'teams'
+  })
+);
 
-
-self.addEventListener("fetch", event => {
-    const base_url = "https://api.football-data.org/v2/";
-    if (event.request.url.indexOf(base_url) > -1) {
-        event.respondWith(
-            caches.open(CACHE_NAME).then(function(cache) {
-                return fetch(event.request).then(function(response) {
-                    cache.put(event.request.url, response.clone());
-                    return response;
-                })
-            })
-        );
-    } else {
-        event.respondWith(
-            caches.match(event.request, {'ignoreSearch': true}).then(function(response) {
-                return response || fetch (event.request);
-            })
-        )
-    }
-});
+workbox.routing.registerRoute(
+  new RegExp('https://api.football-data.org/v2/competitions/CL/matches'),
+    workbox.strategies.staleWhileRevalidate({
+      cacheName: 'matches'
+  })
+);
 
 
 // membuat push
