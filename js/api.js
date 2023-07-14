@@ -1,5 +1,5 @@
 const API_KEY = "66977226766349bfbd0758ecd35f661f";
-const BASE_URL = "https://api.football-data.org/v2/";
+const BASE_URL = "https://api.football-data.org/v4/";
 
 // Kita buat method untuk request ke API (disini dinamai fetchDataFromApi dengan menerima parameter endpoint)
 
@@ -7,7 +7,7 @@ const fetchDataFromApi = url => {
     return fetch(url, {
             headers: {
                 'X-Auth-Token': API_KEY,
-                'Access-Control-Allow-Origin': "*"
+                'Access-Control-Allow-Origin': 'http://localhost'
             }
         })
         .then(res => {
