@@ -6,7 +6,8 @@ const BASE_URL = "https://api.football-data.org/v2/";
 const fetchDataFromApi = url => {
     return fetch(url, {
             headers: {
-                'X-Auth-Token': API_KEY
+                'X-Auth-Token': API_KEY,
+                'Access-Control-Allow-Origin': "*"
             }
         })
         .then(res => {
