@@ -1,4 +1,4 @@
-const API_KEY = "66977226766349bfbd0758ecd35f661f";
+const API_KEY = "520d3aefaed14e39b7af1af25f8ef57f";
 const BASE_URL = "https://api.football-data.org/v4/";
 
 // Kita buat method untuk request ke API (disini dinamai fetchDataFromApi dengan menerima parameter endpoint)
@@ -92,7 +92,7 @@ const showMatches = dataMatches => {
 const getAllTeams = () => {
     // jika ada ada di caches dengan  endpoint sebagi argument 
     if ("caches" in window) {
-        caches.match(`${BASE_URL}competitions/2001/teams`).then(response => {
+        caches.match(`${BASE_URL}teams`).then(response => {
             if (response) {
                 response.json().then(data => {
                     // console.log("Matches Data: " + data);
@@ -105,7 +105,7 @@ const getAllTeams = () => {
 
     // jika tidak ada ada di caches, dengan  endpoint seabagai argument 
 
-    fetchDataFromApi(`${BASE_URL}competitions/2001/teams`)
+    fetchDataFromApi(`${BASE_URL}teams`)
         .then(data => {
              $(".preloader").fadeOut();
             showTeams(data);
@@ -126,7 +126,7 @@ const showTeams = dataTeams => {
         let founded = data.founded;
         let address = data.address;
         let website = data.website;
-        let crestUrl = data.crestUrl;
+        let crestUrl = data.crest;
 
         if (crestUrl === null) {
             crestUrl = '/images/pwa-192x192.png';

@@ -26,7 +26,7 @@ const getFavTeams = (id) => {
 	let cacheLogo = cacheFav[5];
 	// jika ada ada di caches dengan  endpoint sebagi argument 
 	if ("caches" in window) {
-		caches.match(`${BASE_URL}competitions/2001/teams`).then(response => {
+		caches.match(`${BASE_URL}teams`).then(response => {
 			if (response) {
 				response.json().then(data => {
 					let objectTeam = {
@@ -65,7 +65,7 @@ function addFavorite(data) {
 	let founded = data.founded;
 	let address = data.address;
 	let website = data.website;
-	let crestUrl = data.crestUrl;
+	let crestUrl = data.crest;
 
 	if (crestUrl === null) {
 		crestUrl = '/images/pwa-192x192.png';
